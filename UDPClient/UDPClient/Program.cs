@@ -62,7 +62,7 @@ namespace UDPClient
                     Console.WriteLine("The server cpu load is: " + returnData.ToString());
                   }
                   else {
-                    Console.WriteLine("Input error. Input was:{0}:", input);
+                    Console.WriteLine("" + returnData.ToString());
                   }
                 }
 

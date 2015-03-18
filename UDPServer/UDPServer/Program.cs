@@ -34,24 +34,33 @@ namespace UDPServer
 
             //Start server routinen
             while (true)
-            {
-               Console.WriteLine("Waiting for client...");
-               data = newsock.Receive(ref sender);
-               if (Encoding.ASCII.GetString(data, 0, data.Length) == "u"|| Encoding.ASCII.GetString(data, 0, data.Length) == "U")
-               {
-                 Console.WriteLine("Client requested server uptime information...");
-                 string text = System.IO.File.ReadAllText(@"/proc/uptime");
-                 Console.WriteLine("Server uptime is: {0}", text);
-                 newsock.Send(text, text.Length, sender);
-               }
-               if (Encoding.ASCII.GetString(data, 0, data.Length) == "l"|| Encoding.ASCII.GetString(data, 0, data.Length) == "L")
-               {
-                 Console.WriteLine("Client requested CPU-load information...");
-                 string text = System.IO.File.ReadAllText(@"/proc/loadavg");
-                 Console.WriteLine("Server cpu load is: {0}", text);
-                 newsock.Send(text, text.Length, sender);
-               }
-            }
+              {
+                 Console.WriteLine("Waiting for client...");
+                 data = newsock.Receive(ref sender);
+                 if (Encoding.ASCII.GetString(data, 0, data.Length) == "u"|| Encoding.ASCII.GetString(data, 0, data.Length) == "U")
+                 {
+                   Console.WriteLine("Client requested server uptime information...");
+                   string text = System.IO.File.ReadAllText(@"/proc/uptime");
+                   Console.WriteLine("Server uptime is: {0}", text);
+                   data = Encoding.ASCII.GetBytes(text);
+                   newsock.Send(data, data.Length, sender);
+                 }
+                 else if (Encoding.ASCII.GetString(data, 0, data.Length) == "l"|| Encoding.ASCII.GetString(data, 0, data.Length) == "L")
+                 {
+                   Console.WriteLine("Client requested CPU-load information...");
+                   string text = System.IO.File.ReadAllText(@"/proc/loadavg");
+                   Console.WriteLine("Server cpu load is: {0}", text);
+                   data = Encoding.ASCII.GetBytes(text);
+                   newsock.Send(data, data.Length, sender);
+                 }
+                 else
+                 {
+                   Console.WriteLine("Client issued an invalid command. Resetting...");
+                   string text = "The issued command was invalid. Please send a valid command.";
+                   data = Encoding.ASCII.GetBytes(text);
+                   newsock.Send(data, data.Length, sender);
+                 }
+              }
         }
     }
 }
