@@ -35,7 +35,7 @@ namespace UDPServer
             //Test indlæsning af filer
             string text = System.IO.File.ReadAllText(@"/proc/uptime");
             Console.WriteLine("Server uptime is: {0}", text);
-            string text = System.IO.File.ReadAllText(@"/proc/loadavg");
+            text = System.IO.File.ReadAllText(@"/proc/loadavg");
             Console.WriteLine("Server cpu load is: {0}", text);
 
             //Start server routinen

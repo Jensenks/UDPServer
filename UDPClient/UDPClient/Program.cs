@@ -44,15 +44,15 @@ namespace UDPClient
                   // Send kommand til server
                   Console.WriteLine("Choose command for server. u/U for uptime. l/L for cpu load info:");
                   string input = Console.ReadLine();
-                  Byte[] sendBytes = Encoding.ASCII.GetBytes(input);
+                  sendBytes = Encoding.ASCII.GetBytes(input);
                   udpClient.Send(sendBytes, sendBytes.Length);
 
                   //Vent på at modtage data
-                  IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                  RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
                   // Indlæs data
-                  Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
-                  string returnData = Encoding.ASCII.GetString(receiveBytes);
+                  receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
+                  returnData = Encoding.ASCII.GetString(receiveBytes);
 
                   //Udskriv relevent data
                   if (input == "u"|| input == "U") {
@@ -62,7 +62,7 @@ namespace UDPClient
                     Console.WriteLine("The server cpu load is: " + returnData.ToString());
                   }
                   else {
-                    Console.WriteLine("Input error. Input was:{0}:", input)
+                    Console.WriteLine("Input error. Input was:{0}:", input);
                   }
                 }
 
