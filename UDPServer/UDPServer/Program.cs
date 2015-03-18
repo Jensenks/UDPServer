@@ -32,32 +32,26 @@ namespace UDPServer
             data = Encoding.ASCII.GetBytes(connectedMessage);
             newsock.Send(data, data.Length, sender);
 
-            //Test indlæsning af filer
-            string text = System.IO.File.ReadAllText(@"/proc/uptime");
-            Console.WriteLine("Server uptime is: {0}", text);
-            text = System.IO.File.ReadAllText(@"/proc/loadavg");
-            Console.WriteLine("Server cpu load is: {0}", text);
-
             //Start server routinen
-            // while (true)
-            // {
-            //    Console.WriteLine("Waiting for client...");
-            //    data = newsock.Receive(ref sender);
-            //    if (Encoding.ASCII.GetString(data, 0, data.Length) == "u"|| Encoding.ASCII.GetString(data, 0, data.Length) == "U")
-            //    {
-            //      Console.WriteLine("Client requested server uptime information...");
-            //      string text = System.IO.File.ReadAllText(@"/proc/uptime");
-            //      Console.WriteLine("Server uptime is: {0}", text);
-            //      newsock.Send(text, text.Length, sender);
-            //    }
-            //    if (Encoding.ASCII.GetString(data, 0, data.Length) == "l"|| Encoding.ASCII.GetString(data, 0, data.Length) == "L")
-            //    {
-            //      Console.WriteLine("Client requested CPU-load information...");
-            //      string text = System.IO.File.ReadAllText(@"/proc/loadavg");
-            //      Console.WriteLine("Server cpu load is: {0}", text);
-            //      newsock.Send(text, text.Length, sender);
-            //    }
-            // }
+            while (true)
+            {
+               Console.WriteLine("Waiting for client...");
+               data = newsock.Receive(ref sender);
+               if (Encoding.ASCII.GetString(data, 0, data.Length) == "u"|| Encoding.ASCII.GetString(data, 0, data.Length) == "U")
+               {
+                 Console.WriteLine("Client requested server uptime information...");
+                 string text = System.IO.File.ReadAllText(@"/proc/uptime");
+                 Console.WriteLine("Server uptime is: {0}", text);
+                 newsock.Send(text, text.Length, sender);
+               }
+               if (Encoding.ASCII.GetString(data, 0, data.Length) == "l"|| Encoding.ASCII.GetString(data, 0, data.Length) == "L")
+               {
+                 Console.WriteLine("Client requested CPU-load information...");
+                 string text = System.IO.File.ReadAllText(@"/proc/loadavg");
+                 Console.WriteLine("Server cpu load is: {0}", text);
+                 newsock.Send(text, text.Length, sender);
+               }
+            }
         }
     }
 }
