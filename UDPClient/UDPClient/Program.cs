@@ -43,8 +43,6 @@ namespace UDPClient
                                             RemoteIpEndPoint.Port.ToString());
 
                 udpClient.Close();
-                udpClientB.Close();
-
             }
             catch (Exception e)
             {
