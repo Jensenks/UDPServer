@@ -12,7 +12,9 @@ namespace UDPServer
     {
         static void Main(string[] args)
         {
-            var ipep = new IPEndPoint(IPAddress.Any, 9050);
+            Console.WriteLine("Starting server...");
+
+            var ipep = new IPEndPoint(IPAddress.Any, 11000);
             var newsock = new UdpClient(ipep);
 
             Console.WriteLine("Waiting for a client...");

@@ -12,10 +12,15 @@ namespace UDPClient
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Starting client...");
             UdpClient udpClient = new UdpClient(11000);
             try
             {
-                udpClient.Connect("www.contoso.com", 11000);
+                Console.WriteLine("Connecting to server...");
+
+                udpClient.Connect("10.0.0.1", 11000);
+
+                Console.WriteLine("Connected to server. Sending message...");
 
                 // Sends a message to the host to which you have connected.
                 Byte[] sendBytes = Encoding.ASCII.GetBytes("Is anybody there?");
