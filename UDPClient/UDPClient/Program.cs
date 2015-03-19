@@ -17,29 +17,26 @@ namespace UDPClient
             try
             {
                 Console.WriteLine("Connecting to server...");
-
+                // Forsøg at oprette forbindelse til serveren med ip 10.0.0.1 og port 11000
                 udpClient.Connect("10.0.0.1", 11000);
 
                 Console.WriteLine("Connected to server. Sending message: This is the client connection");
 
-                // Sends a message to the host to which you have connected.
+                // Send en testbesked til serveren for at tjekke forbindelsen
                 Byte[] sendBytes = Encoding.ASCII.GetBytes("This is the client connection");
                 udpClient.Send(sendBytes, sendBytes.Length);
 
-                //IPEndPoint object will allow us to read datagrams sent from any source.
+                // Tjek efter beskeder fra en hvilken som helst ip
                 IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
-                // Blocks until a message returns on this socket from a remote host.
+                // Aflæs bytes fra afsenderen (I dette tilfælde vores UDP server)
                 Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
                 string returnData = Encoding.ASCII.GetString(receiveBytes);
 
-                // Uses the IPEndPoint object to determine which of these two hosts responded.
+                // Udskriv svaret fra afsenderen (Serveren)
                 Console.WriteLine("This is the message you received: " +
                                              returnData.ToString());
-                Console.WriteLine("This message was sent from " +
-                                            RemoteIpEndPoint.Address.ToString() +
-                                            " on their port number " +
-                                            RemoteIpEndPoint.Port.ToString());
+
                 while(true) {
                   // Send kommand til server
                   Console.WriteLine("Choose command for server. u/U for uptime. l/L for cpu load info:");
